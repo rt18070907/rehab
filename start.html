@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eid Mubarak Special Card</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0b0f2b;
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+.page{
+display:none;
+height:100vh;
+width:100%;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+position:absolute;
+}
+
+.active{
+display:flex;
+}
+
+button{
+padding:12px 30px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:gold;
+cursor:pointer;
+margin-top:20px;
+}
+
+button:hover{
+background:orange;
+}
+
+h1{
+font-size:60px;
+color:gold;
+}
+
+p{
+font-size:20px;
+max-width:600px;
+line-height:1.6;
+}
+
+video{
+border-radius:15px;
+margin-top:20px;
+}
+
+/* Moon Animation */
+
+.moon{
+position:absolute;
+top:80px;
+right:100px;
+width:120px;
+height:120px;
+background:#fff;
+border-radius:50%;
+box-shadow:0 0 40px white;
+animation:float 4s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
+}
+
+/* stars */
+
+.star{
+position:absolute;
+background:white;
+width:3px;
+height:3px;
+border-radius:50%;
+animation:twinkle 2s infinite;
+}
+
+@keyframes twinkle{
+0%{opacity:0.3}
+50%{opacity:1}
+100%{opacity:0.3}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<!-- stars -->
+<script>
+for(let i=0;i<80;i++){
+let star=document.createElement("div")
+star.className="star"
+star.style.top=Math.random()*100+"vh"
+star.style.left=Math.random()*100+"vw"
+star.style.animationDuration=(Math.random()*3+2)+"s"
+document.body.appendChild(star)
+}
+</script>
+
+
+<!-- PAGE 1 -->
+
+<div class="page active" id="page1">
+
+<h1>Eid Mubarak 🌙</h1>
+
+<p>A Special Eid Surprise For You</p>
+
+<button onclick="nextPage()">Open Card</button>
+
+</div>
+
+
+
+<!-- PAGE 2 -->
+
+<div class="page" id="page2">
+
+<h1>Special Message 🎥</h1>
+
+<video width="500" controls>
+
+<source src="eid.mp4" type="video/mp4">
+
+</video>
+
+<button onclick="nextPage()">Next</button>
+
+</div>
+
+
+
+<!-- PAGE 3 -->
+
+<div class="page" id="page3">
+
+<h1>For Someone Special ❤️</h1>
+
+<p>
+
+On this beautiful Eid day  
+I pray Allah fills your life with happiness,  
+your heart with peace,  
+and our bond with endless love.  
+
+You are very special to me.  
+Eid Mubarak 🌙❤️
+
+</p>
+
+<button onclick="nextPage()">Final Surprise</button>
+
+</div>
+
+
+
+<!-- PAGE 4 -->
+
+<div class="page" id="page4">
+
+<h1>✨ Eid Mubarak ✨</h1>
+
+<p>
+
+May this Eid bring happiness,  
+love, and endless blessings into your life.
+
+You truly mean a lot to me ❤️
+
+</p>
+
+</div>
+
+
+
+<script>
+
+let currentPage=1
+
+function nextPage(){
+
+document.getElementById("page"+currentPage).classList.remove("active")
+
+currentPage++
+
+document.getElementById("page"+currentPage).classList.add("active")
+
+}
+
+</script>
+
+</body>
+</html>

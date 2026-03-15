@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forever Yours 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .page.prev {
+            transform: translateX(-100%);
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 20px;
+            animation: float 6s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            color: white;
+            text-shadow: 0 0 30px rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .love-letter {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .letter-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .signature {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #e91e63;
+            border-top: 2px solid #f8bbd9;
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-btn { left: 40px; }
+        .next-btn { right: 40px; }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .photo-frame {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 8px solid rgba(255,255,255,0.5);
+            margin: 20px auto;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+            background-size: 300% 300%;
+            animation: gradientRotate 4s ease infinite;
+        }
+
+        @keyframes gradientRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .promise-list {
+            list-style: none;
+            max-width: 500px;
+        }
+
+        .promise-item {
+            background: rgba(255,255,255,0.9);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .promise-item:nth-child(1) { animation-delay: 0.2s; }
+        .promise-item:nth-child(2) { animation-delay: 0.4s; }
+        .promise-item:nth-child(3) { animation-delay: 0.6s; }
+        .promise-item:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideInLeft {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .countdown {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            margin: 20px 0;
+        }
+
+        .final-heart {
+            font-size: 8rem;
+            color: #ff1744;
+            animation: heartbeat 1.5s infinite;
+            margin: 30px 0;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            .prev-btn { left: 20px; }
+            .next-btn { right: 20px; }
+            .love-letter {
+                padding: 25px;
+                margin: 20px;
+            }
+
+            .photo-frame{
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.photo-frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Page 1: Welcome -->
+    <div class="page active" id="page1">
+        <div class="title">My Dearest/Romantic Love</div>
+        <div class="subtitle">This journey is made just for you... 💖</div>
+        <div class="photo-frame"><img src="starry-night-romance-stockcake.png" alt="">
+        </div>
+
+    </div>
+
+    <!-- Page 2: First Memory -->
+    <div class="page" id="page2">
+        <div class="love-letter">
+            <div class="letter-text">
+                The first time I saw you, my heart whispered, "This is the one." 
+                Your smile lit up my entire world, and from that moment, 
+                I knew my life would never be the same. You are my sunshine, 
+                my everything, my forever.
+            </div>
+            <div class="signature">Forever Yours, 💕</div>
+        </div>
+    </div>
+
+    <!-- Page 3: Promises -->
+    <div class="page" id="page3">
+        <div class="title">My Promises to You</div>
+        <ul class="promise-list">
+            <li class="promise-item">❤️ I promise to love you through every sunrise and sunset</li>
+            <li class="promise-item">💍 I promise to hold your hand through every storm</li>
+            <li class="promise-item">🌟 I promise to celebrate every victory with you</li>
+            <li class="promise-item">💖 I promise to be your safe place, always</li>
+        </ul>
+    </div>
+
+    <!-- Page 4: What I Love About You -->
+    <div class="page" id="page4">
+        <div class="love-letter">
+            <div class="letter-text">
+                I love the way your eyes sparkle when you laugh, 
+                how you make ordinary moments feel magical. 
+                Your kindness melts my heart, your strength inspires me, 
+                and your love completes me. You are my greatest adventure.
+            </div>
+            <div class="signature">With all my love, 💕</div>
+        </div>
+    </div>
+
+    <!-- Page 5: Our Future -->
+    <div class="page" id="page5">
+        <div class="title">Our Beautiful Future</div>
+        <div class="subtitle">
+            I dream of lazy mornings wrapped in your arms, 
+            adventures we'll share, laughter that echoes through our home, 
+            and growing old together, hand in hand.
+        </div>
+        <div class="photo-frame"><img src="09c267280e5856f3b2757fbb7d1ad1da.jpg" alt=""></div>
+    </div>
+
+    <!-- Page 6: The Vow -->
+    <div class="page" id="page6">
+        <div class="love-letter">
+            <div class="letter-text">
+                Today, tomorrow, and for all eternity, 
+                I choose you. I vow to love you fiercely, 
+                protect you always, and cherish every moment 
+                we have together. You are my heart, my soul, my everything.
+            </div>
+            <div class="signature" style="font-size: 2rem; color: #d81b60;">I love you more than words can say 💍</div>
+        </div>
+    </div>
+
+    <!-- Page 7: Final Surprise -->
+    <div class="page" id="page7">
+        <div class="final-heart">💖</div>
+        <div class="title">Will You Be Mine Forever?</div>
+        <div class="subtitle" style="font-size: 1.8rem;">
+            Every page of my heart is written for you. 
+            Say YES and make all my dreams come true! ✨
+        </div>
+    </div>
+
+    <button class="nav-btn prev-btn" onclick="prevPage()">❮</button>
+    <button class="nav-btn next-btn" onclick="nextPage()">❯</button>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 7;
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                const current = document.getElementById(`page${currentPage}`);
+                const next = document.getElementById(`page${currentPage + 1}`);
+                
+                current.classList.remove('active');
+                current.classList.add('prev');
+                next.classList.add('active');
+                
+                currentPage++;
+                createHearts();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                const current = document.getElementById(`page${currentPage}`);
+                const prev = document.getElementById(`page${currentPage - 1}`);
+                
+                current.classList.remove('active');
+                prev.classList.remove('prev');
+                prev.classList.add('active');
+                
+                currentPage--;
+            }
+        }
+
+        // Floating hearts
+        function createHearts() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-float';
+                    heart.innerHTML = ['💖', '💕', '💗', '💝', '💘'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 7000);
+                }, i * 300);
+            }
+        }
+
+        // Sparkles
+        function createSparkles() {
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 2000);
+            }, 300);
+        }
+
+        // Auto-next on last page
+        function checkAutoNext() {
+            if (currentPage === totalPages) {
+                document.querySelector('.next-btn').style.display = 'none';
+            } else {
+                document.querySelector('.next-btn').style.display = 'block';
+            }
+        }
+
+        // Touch/swipe support
+        let startX = 0;
+        document.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+        });
+        
+        document.addEventListener('touchend', e => {
+            const endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) nextPage();
+            if (endX - startX > 50) prevPage();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Initialize
+        createSparkles();
+        createHearts();
+        setInterval(createHearts, 8000);
+        checkAutoNext();
+
+        // Page transition listeners
+        setInterval(checkAutoNext, 100);
+    </script>
+</body>
+</html>
